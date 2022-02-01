@@ -1,5 +1,6 @@
 Feature: Login feature
 
+@SmokeTest
 Scenario: As a user I want to login as valid user
 Given I will launch browser
 And I will enter the url
@@ -7,6 +8,7 @@ When Login page is displayed I will enter username and password
 And click on login
 Then validate the home page is displayed or not
 
+@RegressionTest
 Scenario: As a user I will pass invalid credentials for login
 Given I will launch browser
 And I will enter the url

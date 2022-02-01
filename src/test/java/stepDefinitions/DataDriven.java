@@ -1,6 +1,7 @@
 package stepDefinitions;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -13,7 +14,6 @@ import org.testng.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.messages.internal.com.google.protobuf.util.Durations;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DataDriven {
@@ -74,5 +74,14 @@ public class DataDriven {
 	   Assert.assertTrue(orgName.contains(orgnaziation));
 	   driver.quit();
 	}
+	
+	@When("I want read a data form below data table")
+	public void i_want_read_a_data_form_below_data_table(io.cucumber.datatable.DataTable dataTable) {
+	  List<List<String>> data = dataTable.asLists();
+	  System.out.println(data);
+	  System.out.println(data.get(0).get(0));
+	  System.out.println(data.get(2).get(2));
+	}
+
 
 }
