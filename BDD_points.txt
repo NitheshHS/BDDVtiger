@@ -1,0 +1,221 @@
+BDD :- Behaviour driven development
+Cucumber is also a framework
+Cucumber is developed by Ruby language
+Smart Bear:- company:- zephyr and Soap UI
+
+Feature:- It contains all testcases
+Gherkin: Given, When, Then, And , But
+
+Login.feature
+Scenario: I want to login to Vtiger app
+Given user launch the browser and enter the url
+When As a valid user i enter valid username and valid password
+And I will click on login button
+Then Home page is displayed
+
+Scenario: I want to login to vtiger by using inavlid user name and password
+Given user launch the browser and enter the url
+When user enter invalid username and password and click on login button
+Then Error message should be displayed
+
+StepDefinition: 
+Webdriver driver;
+@Given("^user launch the browser and enter the url$")
+public void user_launch_the_browser_and_enter_the_url()
+{
+driver=new chromedriver();
+driver.get("http://localhost:8080")
+}
+@When("^As a valid user i enter valid username and valid password$")
+public void As_a_valid_user_i_enter_valid_username_and_valid_password(){
+driver.findelement().sendkeys("username");
+
+}
+@Then
+
+Runner class: -
+
+@cucumberOption
+{
+features={"path of feature file"},
+glue={"path of step definition class"}
+}
+-----------------------------------------------------
+dependency
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-java</artifactId>
+    <version>6.9.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-testng</artifactId>
+    <version>6.9.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-core</artifactId>
+    <version>6.9.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-java</artifactId>
+    <version>6.9.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+<dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>3.8.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>3.141.59</version>
+</dependency>
+    <dependency>
+    <groupId>com.vimalselvam</groupId>
+    <artifactId>cucumber-extentsreport</artifactId>
+    <version>3.1.1</version>
+</dependency>
+    <dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>3.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-picocontainer</artifactId>
+    <version>6.9.1</version>
+    <scope>test</scope>
+</dependency>
+
+
+-----------------------------------------
+feature file:- it contains scenarios and secenrio outline
+-> In feature we write scenario by using gherkin keywords(Given,When,Then, And)
+
+StepDefinition:- It is a class which contains all the step implementation presnt in feature file
+
+Runner:- It is used to map the feature file and step definition 
+-> here in runner we use cucumber options like 
+	--> feature:- here we are passing path of feature file
+		---> arg:- string[]
+	--> glue:- glue will define the step definition location provided to the scenario steps
+		---> arg:- string[]
+	--> dryRun:- It will check all feature file steps having step definition or not
+		   It will not participate in exceution but it will check all the step have step defition or not
+		--->arg:- boolean
+-----------------------------------------------------------------------------------
+Q)How did achieve data driven testing in your BDD framework
+By using scenario outline and along we specify the data inside examples
+Scenario Outline: I want to create multiple organization
+   Given I want to launch the browser
+   And I will navigate to login page by entering the url "http://localhost:8888"
+   When I enter valid username "admin" and password "manager" and click on login button
+   And I will click on organization
+   And In organization page I will click on create organization icon
+   And I enter the organization name "<organizationName>" and click on save button
+   Then I validate that organization name is displayed in the info or not
+   Examples:
+			|organizationName|
+			|Qspiders|
+			|Jspiders|
+			|pySpiders|
+  _------------------------------------------------------------------------------------------
+
+
+difference b/w scenario and scenario outline
+scenario:- If we want to excecute end to end scenario we go for scenario
+scenario outline:- It will execute the same scenario with multiple set of data specified in Examples
+----------------------------------------------------------------------------------------------------
+Q)How will you read data from data table in BDD cucumber
+case1:
+@When("I want to read data in row and column wise")
+	public void i_want_to_read_data_in_row_and_column_wise(DataTable dataTable) {
+	    List<List<Object>> data = dataTable.asLists(String.class);
+	    System.out.println(data.get(2).get(1));
+	    System.out.println(data.get(1).get(1));
+	}
+case2:
+@When("I want to read data in row and column wise")
+	public void i_want_to_read_data_in_row_and_column_wise(DataTable dataTable) {
+	List<Map<Object, Object>> data = dataTable.asMaps(String.class, String.class);
+	System.out.println(data.get(0).get("name"));
+	System.out.println(data.get(1).get("name"));
+	}
+
+----------------------------------------------
+Q)what is background?
+Common test steps in feature file
+---------------------------------------------------
+Q)What is the use of tags?
+When we want to execute group of scenario's we go for tags like smokeTest, Regression, UAT etc
+-------------------------------------------------
+Q)What is the use of plugin cucumber option?
+->used to print the scenario steps in console by specifing plugin as pretty
+->Used to generate the report eg:-html report, extent report etc
+-------------------------------------------------
+Q)What is the use of monochrome?
+Its a cucumber option used to remove special character in console by making it as true
+
+-----------------------------------------------
+Q)What is Hook in cucumber?
+Common reusable method we are keeping inside hook class and it conatins only @Before and @After annotation
+-> If we have multiple @Before and @After method we go for ordering
+-> @Before will execute in ascending order 0,1,2,3,....
+->@After will execute in descending order 3,2,1,0...
+-> If we are keeping Hook class outside stepdefinition package we have to sepcefy the Hook class path in glue
+-> don't extend extend Hook class to stepDefinition
+----------------------------------------------
+Feature file
+	-> Scenario
+	-> Scenario outline (Example)
+	-> DataTables-> converted dataTable to lists and maps
+	->Gherkin keyword:- Given When Then And But
+Stepdefinition
+	->@Given, @When, @Then, @And
+Runner
+	-Cucumber options
+		-feature
+		-glue
+		-dryRun
+		-plugin
+		-monochrome
+		-tags
+hook
+	-@Before @After
+taking screenshot for failed scenario's
+public void tearDown(Scenario scenario) {
+		if(scenario.isFailed()) {
+			//write code for taking screenshot
+		}
+}
+
+1.Feature File:-This a repository where we are writing our sceanrio's In a single feature we will write both positive and negative scenario's
+2.StepDefinitions:- This is the actual test script where we are taking the sceanrio steps and writing the logic
+3.Hook:- This class where we have used cucumber annotations like @Before and @After which is used to write prescript and post script
+4.Runner class:-This class used to map the feature file and also step definition and also runner class used for batch, group and parallel exceution, used to generate a reports
+5. Base Class:- In this class we are declaring the variable which is utilized in both HOOK and StepDefinitions
+6. WebdriverUtility:- This class contains the utility methods for browser actions like: Drag and drop, Handling alert,
+frames, taking screenshot,javascript executor and handling dropdown etc..
+7. FilePath:- This is the interface where we are keeping all the File path like property file path
+8. PropertyFileUtility:- This class contains the methods to get the browser name, app credentials, wait times from property file
+9. POM class:- This a page object model design pattern we have used to identify and storing the webElemenet and we are utilizing by creating a object by passing driver reference to constructor
+10. Reports:- This contains the extent reports
+11. Target:- This folder contains the html, json reports
+12. pom.xml:- add dependency
+
+
+Difference between comparable and comparator 
+comparable:- The class restricted to single sorting order 
+compareTo(Object obj)
+
+Comparator:- It will provide multiple sorting order
+compare(Object obj1, Object obj2)
+
