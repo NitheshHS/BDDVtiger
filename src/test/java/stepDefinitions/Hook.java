@@ -7,10 +7,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import pageobjects.PageFactoryManager;
 import utility.Base;
 import utility.FileUtility;
+import utility.WebDriverUtility;
 
 public class Hook {
 	Base base;//global variable
@@ -38,7 +40,12 @@ public class Hook {
 	}
 	
 	@After
-	public void quitBrowser() {
+	public void quitBrowser(Scenario scenario) {
+		if(scenario.isFailed()) {
+			WebDriverUtility.getScreenshot(base.driver, scenario.getName());
+			scenario.attach(WebDriverUtility.getScreenshotInBytes(base.driver), 
+					"image/png", scenario.getName());
+		}
 		base.driver.close();
 	}
 	//before annotation will execute in ascending order means lower to higher values

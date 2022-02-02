@@ -52,6 +52,7 @@ public class LoginTest {
 //		  base.driver.findElement(By.name("user_password")).sendKeys("manager123");
 		base.pages.initLoginPage().getUserNameTextField().sendKeys("admin123");
 		base.pages.initLoginPage().getPasswordTextField().sendKeys("password");
+		Assert.fail();
 	}
 
 	@Then("error message should display")

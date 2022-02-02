@@ -7,7 +7,10 @@ import io.cucumber.testng.CucumberOptions;
 glue = {"stepDefinitions"},//package name
 dryRun = false,// when it is true it will map both feature and step definition for missing steps
 //tags = "@fast",
-plugin = {"pretty"},//used to print the feature file step during execution
+plugin = {"pretty",
+		"html:report/cucumberreport.html",
+		"json:report/cucumberjson.json",
+		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},//used to print the feature file step during execution
 monochrome = true)//remove the special character in console o/p
 public class CucumberRunner extends AbstractTestNGCucumberTests{
 /*
