@@ -20,9 +20,11 @@ public class Hook {
 	public Hook(Base base) {
 		this.base=base;
 	}
+	
 	@Before
 	public void initBrowser() throws Throwable {
 		String browser=fileUtility.getPropertyValue("browserName");
+		//String browser=System.getProperty("browser");
 		if(browser.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			base.driver=new ChromeDriver();
