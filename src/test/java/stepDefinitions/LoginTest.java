@@ -10,11 +10,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import utility.Base;
+import pageobjects.LoginPage;
+import pageobjects.PageFactoryManager;
+import utility.Base; 
+
 
 public class LoginTest {
 	
 	Base base;
+	
 	public LoginTest(Base base) {
 		this.base=base;
 	}
@@ -23,13 +27,16 @@ public class LoginTest {
 
 	@When("Login page is displayed I will enter username and password")
 	public void login_page_is_displayed_i_will_enter_username_and_password() {
-	  base.driver.findElement(By.name("user_name")).sendKeys("admin");
-	  base.driver.findElement(By.name("user_password")).sendKeys("manager");
+//	  base.driver.findElement(By.name("user_name")).sendKeys("admin");
+//	  base.driver.findElement(By.name("user_password")).sendKeys("manager");
+	base.pages.initLoginPage().getUserNameTextField().sendKeys("admin");
+	base.pages.initLoginPage().getPasswordTextField().sendKeys("manager");
 	}
 
 	@When("click on login")
 	public void click_on_login() {
-	    base.driver.findElement(By.id("submitButton")).click();
+//	    base.driver.findElement(By.id("submitButton")).click();
+		base.pages.initLoginPage().getLoginButton().click();
 	}
 
 	@Then("validate the home page is displayed or not")
@@ -41,14 +48,17 @@ public class LoginTest {
 
 	@When("login page is displayed enter invalid username and password")
 	public void login_page_is_displayed_enter_invalid_username_and_password() {
-		  base.driver.findElement(By.name("user_name")).sendKeys("admin123");
-		  base.driver.findElement(By.name("user_password")).sendKeys("manager123");
+//		  base.driver.findElement(By.name("user_name")).sendKeys("admin123");
+//		  base.driver.findElement(By.name("user_password")).sendKeys("manager123");
+		base.pages.initLoginPage().getUserNameTextField().sendKeys("admin123");
+		base.pages.initLoginPage().getPasswordTextField().sendKeys("password");
 	}
 
 	@Then("error message should display")
 	public void error_message_should_display() {
-	    String errorMsg=base.driver.findElement(By.xpath("//div[@class='errorMessage']")).getText();
-	    Assert.assertEquals(errorMsg, "You must specify a valid username and password.");
+		//String errorMsg=base.driver.findElement(By.xpath("//div[@class='errorMessage']")).getText();
+	  String errorMsg= base.pages.initLoginPage().getErrorMessage().getText();
+		Assert.assertEquals(errorMsg, "You must specify a valid username and password.");
 	    
 	}
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pageobjects.PageFactoryManager;
 import utility.Base;
 import utility.FileUtility;
 
@@ -32,6 +33,8 @@ public class Hook {
 		base.driver.manage().window().maximize();
 		base.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		base.driver.get(fileUtility.getPropertyValue("url"));
+		//initialize the page factory manager
+		base.pages=new PageFactoryManager(base.driver);
 	}
 	
 	@After
